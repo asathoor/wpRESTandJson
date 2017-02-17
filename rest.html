@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<header>
+
+	<h1> Response from REST API </h1>
+	<h2> From research-wordpress.dk </h2>
+
+</header>
+
+<main>
+	<article></article>
+</main>
+
+<footer>
+	&copy; GPLv3 Per Thykjaer Jensen
+</footer>
+
+<!-- load jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- get content from multimusen.dk -->
+<script>
+// Using YQL and JSON
+$.ajax({
+    url: "http://research-wordpress.dk/wp-json/wp/v2/posts",
+ 
+    // The name of the callback parameter, as specified by the YQL service
+    jsonp: "callback",
+ 
+    // Tell jQuery we're expecting JSON
+    dataType: "json",
+ 
+    // Tell YQL what we want and that we want JSON
+    data: {
+        //q: "select title,abstract,url from search.news where query=\"cat\"",
+        format: "json"
+    },
+ 
+    // Work with the response
+    success: function( response ) {
+        console.log( response ); // server response
+				console.log( response[0].title.rendered ); // ok
+				console.log( response.length );
+
+			for( var i = 0; i < response.length; i++){
+				console.log( response[i].title.rendered );
+				$('article').append( '<h4>' + response[i].title.rendered + '</h4>' 
+					+ '<div class="articleContent">' + response[i].content.rendered + '</div>');
+			}
+    }
+});
+
+</script>
+
+</body>
+</html>
